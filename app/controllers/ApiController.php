@@ -95,6 +95,8 @@ class ApiController extends BaseController {
 		$posted = explode(":", Input::get('Body'));
 	
 		$poll = Poll::find($posted[0]);
+		if(is_null($poll)) return View::make('phone.error');
+		
 		$choice = $poll->choices()->find($posted[1]);
 
 		// Catch invalid responses

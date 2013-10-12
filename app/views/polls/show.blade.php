@@ -8,7 +8,9 @@
     <div class="header">
         <h1 id="poll-prompt">Poll Name</h1>
     </div>
-    <h3>Text your responses to (210) 526-0691</h3>
+    <h3>Text your responses to:</h3>
+    <h2 class='btn-block disabled'>(210) 526-0691</h2>
+    <br>
     <div id="chart-keys">
         <ul class="list">
             <li class="reference key hidden">
@@ -267,7 +269,7 @@
                 color = colors[i];
                 choice = choices[i];
                 choiceId = choice.getIdentifier();
-                answersCount = answersMap[choiceId];
+                answersCount = answersMap[choiceId] +1;
                 
                 choiceDisplayString = ("Text " + {{ $poll->id }} + ":" + choiceId + " for '" + choice.getName() +"' (" + answersCount + " vote(s))");
 
@@ -361,6 +363,8 @@
         };
     
         loadPoll(pollId);
-        setInterval(function() { loadPoll(pollId) }, 2000);
+        setInterval(function() { 
+            loadPoll(pollId) 
+        }, 2000);
 </script>
 @stop
