@@ -10,7 +10,7 @@ var POLL = POLL || {
 };
 
 POLL.INFO = {
-    BaseUrl: 'api'
+    BaseUrl: '/api'
 };
 
 POLL.MODEL = {
@@ -133,6 +133,7 @@ POLL.MODEL.Poll = (function () {
                     
                     i;
                 
+                if(choicesData != undefined)
                 for (i = 0; i < choicesData.length; i += 1) {
                     choiceData = choicesData[i];
                     choice = new POLL.MODEL.Choice();
@@ -140,6 +141,7 @@ POLL.MODEL.Poll = (function () {
                     choices.push(choice);
                 }
                 
+                if(answersData != undefined)
                 for (i = 0; i < answersData.length; i += 1) {
                     answersData = answersData[i];
                     answer = new POLL.MODEL.Answer();
@@ -149,7 +151,7 @@ POLL.MODEL.Poll = (function () {
                 
                 this.setAnswers(answers);
                 this.setChoices(choices);
-                this.setAnswersCountMap(data.responses);
+                this.setAnswersMap(data.responses);
                 
                 this.setPrompt(data.prompt);
                 this.setIsPublic(data.is_public);
@@ -212,8 +214,8 @@ POLL.MODEL.Choice = (function () {
         update: function (data) {
             if (data !== null) {
                 this.setName(data.name);
-                this.identifier(data.id);
-                this.pollId(data.poll_id);
+                this.setIdentifier(data.id);
+                this.setPollId(data.poll_id);
             }
         }
     };
@@ -313,7 +315,7 @@ POLL.MARSHALLER.PollMarshaller = (function () {
         
         marshall: function (data) {
             
-            var polls,
+            var polls = [],
                 pollsData = data,
                 
                 pollData,

@@ -86,7 +86,7 @@ class ApiController extends BaseController {
 		$answer->poll_id = $poll->id;
 		$answer->save();
 
-		return "Ok";
+		return json_encode("Ok");
 	}
 
 	public function postPhoneResponse()

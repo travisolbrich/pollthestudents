@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+Create a Poll
+@stop
+
 @section('content')
 
 <h1>Create a Poll</h1>
@@ -17,6 +21,12 @@
     <div class="poll-choices">
         <ul class="list">
             <li class="reference choice hidden">
+                <input class="string" type="text" placeholder="Somewhere else..." checked/>
+            </li>
+            <li class="reference choice">
+                <input class="string" type="text" placeholder="Potato Shack" checked/>
+            </li>
+            <li class="reference choice">
                 <input class="string" type="text" placeholder="Antonio's Pizza" checked/>
             </li>
         </ul>
@@ -41,7 +51,7 @@
     </div>            
     <div id="poll-info">
         <p>Your new pool has been created!</p>
-        <a id="newPollLink" href="/poll/view?id=">Share your Poll</a>
+        <a id="newPollLink" class="btn btn-large btn-success" href="/poll/view?id=1">View Poll</a>
     </div>
 </div>
 @stop
@@ -123,16 +133,16 @@
             $("#success").toggleClass("hidden");
             hideCreate();
             
-            var address = "/poll/" + pollId;
-            $('newPollLink').attr('href',('/poll/view?id='+pollId));
+            var address = ('/poll/'+pollId);
+            $('#newPollLink').attr('href',address);
         };
         
         showError = function () {
             $("#error").toggleClass("hidden");
         };
         
-        pollSuccess = function (html) {
-            showSuccess();
+        pollSuccess = function (data, x, y) {
+            showSuccess(data);
         };
         
         pollError = function(data, errorThrown){

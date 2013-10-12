@@ -44,7 +44,7 @@
         <h1>Woops!</h1>
     </div>            
     <div id="poll-error">
-        <p>An error occured. This is not the poll you are looking for...</p>
+        <p>An error occured. Uhhhh...</p>
     </div>
 </div>
 
@@ -71,7 +71,8 @@
             showSelectAnswerHelp,
             hideSelectAnswerHelp,
             hideAnswerSubmit,
-            showAnswerSubmitSuccess;
+            showAnswerSubmitSuccess,
+            showAnswerSubmitFailure;
         
         getPollId = function () 
         {
@@ -246,7 +247,7 @@
                 answer.setPollId(pollId);
                 answer.setChoiceId(choiceId);
                 
-                answerRegistry.create(answer);
+                answerRegistry.create(answer, showAnswerSubmitSuccess, showAnswerSubmitFailure);
             }
         });
         
@@ -275,8 +276,13 @@
             $("#submit-answer").toggleClass("hidden");
         };
         
-        showAnswerSubmitSuccess = function (pollId) {
+        showAnswerSubmitSuccess = function () {
             $("#success").toggleClass("hidden");
+            hideAnswerSubmit();
+        };
+
+        showAnswerSubmitFailure = function (data, error) {
+            $("#error").toggleClass("hidden");
             hideAnswerSubmit();
         };
         

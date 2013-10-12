@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Poll Something New
+@stop
+
 @section('pageContent')
     <div class="container-narrow">
 
@@ -15,7 +19,7 @@
 
       <div class="row-fluid marketing">
         <div class="span6">
-          <h4>Be a badass.</h4>
+          <h4>Be awesome.</h4>
           <p>Make a poll.</p>
 
           <h4>See that big green button?</h4>
@@ -27,10 +31,10 @@
 
         <div class="span6">
           <h4>You've not made a poll yet?</h4>
-          <p>Why not? It's a damn easy button to press.</p>
+          <p>Why not? It's a really easy button to press.</p>
 
           <h4>I can't think of something else witty to say.</h4>
-          <p>So just hit the damn button, already!</p>
+          <p>So just hit the button, already!</p>
 
           <h4>Made a poll already?</h4>
           <p>Why not make more? <em>Why not Zoidberg?</em></p>
