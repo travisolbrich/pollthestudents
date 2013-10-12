@@ -16,5 +16,5 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('poll/sample', 'PollController@sample');
+Route::resource('answer', 'AnswerController');
 Route::resource('poll', 'PollController');

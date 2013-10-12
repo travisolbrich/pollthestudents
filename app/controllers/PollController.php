@@ -68,7 +68,7 @@ class PollController extends BaseController {
 			$poll->choices()->save($newChoice);
 		}
 
-
+		return $poll->id;
 	}
 
 	/**
@@ -114,17 +114,4 @@ class PollController extends BaseController {
 	{
 		//
 	}
-
-	/**
-	 * Return a sample json poll
-	 *
-	 * @return Response
-	 */
-	public function sample()
-	{
-		$poll = Poll::find(1);
-
-		return Response::json($poll);
-	}
-
 }

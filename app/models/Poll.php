@@ -6,4 +6,9 @@ class Poll extends Eloquent {
 	{
 		return $this->hasMany('Choice');
 	}
+
+	public function answers()
+	{
+		return $this->hasMany('Answer');
+	}
 }
