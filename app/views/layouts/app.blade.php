@@ -9,4 +9,4 @@
 	<hr>
 	@include('includes.footer')
 </div>
-
+@stop

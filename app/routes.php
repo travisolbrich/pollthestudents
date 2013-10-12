@@ -13,9 +13,16 @@
 
 Route::get('/', function()
 {
-	return View::make('home');
+	return View::make('home')
+		->with('active', 'home');
 });
 
+Route::get('about', function()
+{
+	return View::make('about')
+		->with('active', 'about');
+});
+
+
 Route::controller('api', 'ApiController');
-Route::resource('answer', 'AnswerController');
 Route::resource('poll', 'PollController');

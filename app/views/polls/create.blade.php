@@ -6,34 +6,66 @@ Create a Poll
 
 @section('content')
 
-<h1>Create a Poll</h1>
-<div id="create">            
-    <div class="header">
-        <h1>New Poll</h1>
-    </div>            
-    <div class="poll-info">
-        <label>Poll Prompt</label>
-        <input id="prompt" type="text" placeholder="What is your favorite place to eat?" checked/>
-        
-        <label>Make Public</label>
-        <input id="isPublic" value="true" type="checkbox" checked/>
-    </div>
-    <div class="poll-choices">
-        <ul class="list">
-            <li class="reference choice hidden">
-                <input class="string" type="text" placeholder="Somewhere else..." checked/>
-            </li>
-            <li class="reference choice">
-                <input class="string" type="text" placeholder="Potato Shack" checked/>
-            </li>
-            <li class="reference choice">
-                <input class="string" type="text" placeholder="Antonio's Pizza" checked/>
-            </li>
-        </ul>
-        <button id="newChoice">New Choice</button>
-    </div>
+<div class="row-fluid">
+<div class="span12">
+<div id="create">   
+
+    <div class="row-fluid">
+    <div class="span10 offset1">
+    <h1>Create a Poll</h1>
+    <hr>
+    <div class="form-horizontal">         
+        <div class="poll-info">
+            <div class="control-group">
+            {{ Form::label('prompt', 'Prompt', array('class'=>'control-label')) }}
+                <div class="controls">
+                {{ Form::text('prompt', null, array('placeholder'=>'What is your favorite place to eat?', 'class' => 'span12'))}}
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox">
+                        <input type="checkbox" name="is_public"> Make Public
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="poll-choices">
     
-    <button id="submit">Submit Poll</button>
+            <div class="control-group">
+                <label for="prompt" class="control-label">Choices</label>
+                <div class="controls">
+                    <div class="list">
+                        
+                        <div class="reference choice hidden">
+                            <input class="string span12" type="text" placeholder="Somewhere else..." checked/>
+                        </div>
+
+                        <div class="reference choice">
+                        <input class="string span12" type="text" placeholder="Potato Shack" checked/>
+                        </div>
+
+                        <div class="reference choice">
+                        <input id="first" class="string span12" type="text" placeholder="Antonio's Pizza" checked/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" id="submit">Submit Poll</button>
+                    <button class="btn btn-primary" id="newChoice">Add a New Choice</button>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+    </div>
+    </div>
 </div>
 
 <div id="error" class="hidden">            
@@ -53,6 +85,8 @@ Create a Poll
         <p>Your new pool has been created!</p>
         <a id="newPollLink" class="btn btn-large btn-success" href="/poll/view?id=1">View Poll</a>
     </div>
+</div>
+</div>
 </div>
 @stop
 @section('javascripts')

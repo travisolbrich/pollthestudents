@@ -9,6 +9,7 @@
 
     <!-- styles -->
     {{ HTML::style('assets/bootstrap/css/bootstrap.css') }}
+    {{ HTML::style('assets/bootstrap/css/bootstrap-responsive.css') }}
     {{ HTML::style('assets/stylesheets/style.css') }} 
   </head>
 

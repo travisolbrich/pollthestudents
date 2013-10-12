@@ -2,6 +2,11 @@
 
 class PollController extends BaseController {
 
+	public function __construct()
+	{
+		View::share('active', false);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
