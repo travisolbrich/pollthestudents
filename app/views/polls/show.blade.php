@@ -12,7 +12,7 @@
     <div id="chart-keys">
         <ul class="list">
             <li class="reference key hidden">
-                <strong><span class="string" type="text">String</span></strong>
+                <strong><span class="string chartkey" type="text">String</span></strong>
             </li>
         </ul>
     </div>
@@ -269,7 +269,7 @@
                 choiceId = choice.getIdentifier();
                 answersCount = answersMap[choiceId];
                 
-                choiceDisplayString = ("Text " + {{ $poll->id }} + ":" + choiceId + " for '" + choice.getName() +"' (" + answersCount + " responses)");
+                choiceDisplayString = ("Text " + {{ $poll->id }} + ":" + choiceId + " for '" + choice.getName() +"' (" + answersCount + " vote(s))");
 
                 chartKeyCopy = chartKeyReference.clone(true);
                 chartKeyCopy.toggleClass("hidden").toggleClass("reference");
@@ -360,6 +360,7 @@
             hideAnswerSubmit();
         };
     
-        setTimeout(loadPoll(pollId), 400);
+        loadPoll(pollId);
+        setInterval(function() { loadPoll(pollId) }, 2000);
 </script>
 @stop
