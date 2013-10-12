@@ -89,4 +89,15 @@ class ApiController extends BaseController {
 		return "Ok";
 	}
 
+	public function getPhoneResponse()
+	{
+		
+    header("content-type: text/xml");
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    echo "
+<Response>
+    <Message>Hello, Mobile Monkey</Message>
+</Response>";
+	}
+
 }
