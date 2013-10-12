@@ -232,14 +232,17 @@
         };
         
         refreshPollChart = function (poll) {
-            var colors = ["#F7464A", "#E2EAE9", "#D4CCC5", "#949FB1", "#4D5360", "#F7464A", "#E2EAE9", "#D4CCC5", "#949FB1", "#4D5360"],
+            var colors = ["#6C853B", "#8F743F", "#303E60", "#733257", "#62753B", 
+                          "#7D6940", "#2F3A54", "#64334F", "#556E24", "#765B27", 
+                          "#1E2C4F", "#5E1F43", "#89A453", "#AB8F57", "#4C5E87", 
+                          "#964C76"],
+                
                 pollAnswerData = poll.getAnswersMap(), 
                 choices = poll.getChoices(),
                 answersMap = poll.getAnswersMap(),
                 
                 chartKeysDom = $("#chart-keys"),
                 chartKeysList = chartKeysDom.find(".list"),
-                
                 
                 chartKeyReference = chartKeysList.find(".reference"),
                 nonReferenceChartKeys = chartKeysList.find(".key").not(".reference"),
@@ -257,6 +260,8 @@
                 ctx = $("#showChart").get(0).getContext("2d");
                 //This will get the first returned node in the jQuery collection.
                 
+            nonReferenceChartKeys.remove();
+            
             for(i = 0; i < choices.length; i += 1)
             {
                 color = colors[i];
@@ -274,7 +279,7 @@
                 chartData.push({'value': answersCount, 'color': color});
             }
         
-            new Chart(ctx).Pie(chartData);
+            new Chart(ctx).Pie(chartData, {animateRotate : false});
         };
         
         pollLoadError = function () {
@@ -354,7 +359,7 @@
             $("#error").toggleClass("hidden");
             hideAnswerSubmit();
         };
-        
-        loadPoll(pollId);
+    
+        setTimeout(loadPoll(pollId), 400);
 </script>
 @stop
