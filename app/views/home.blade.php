@@ -80,7 +80,7 @@
       <div class="jumbotron">
         <h1>Create a Poll!</h1>
         <p class="lead">Create a new public poll.</p>
-        <a class="btn btn-large btn-success" href="#">Sign up today</a>
+        <a class="btn btn-large btn-success" href="/poll/create">New Poll</a>
       </div>
 
       <hr>
@@ -112,7 +112,8 @@
       <hr>
 
       <div class="footer">
-        <p>&copy; Company 2013</p>
+        <p>TAMU Google Hackathon October 2013</p>
+        <p>Travis Olbrich, Derek Burgman, Luis Flores</p>
       </div>
 
     </div> <!-- /container -->
