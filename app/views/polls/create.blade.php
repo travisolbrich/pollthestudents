@@ -12,7 +12,7 @@
         <input id="prompt" type="text" placeholder="What is your favorite place to eat?" checked/>
         
         <label>Make Public</label>
-        <input id="isPublic" type="checkbox" checked/>
+        <input id="isPublic" value="true" type="checkbox" checked/>
     </div>
     <div class="poll-choices">
         <ul class="list">
@@ -77,16 +77,19 @@
             
             //Create options for each option.
             var choices = [], 
-                choiceListing = $(".poll-choices .list");
+                choiceListing = $(".poll-choices .list"),
+                isPublic = $("#isPublic").val(),
+                choiceStringInput;
     
-            $(this).find('li').each(function(){
+            choiceListing.find('li').each(function(){
                 // cache jquery var
                 var current = $(this);
                 
                 if(current.hasClass("hidden") == false)
                 {
                     var choice = new POLL.MODEL.Choice(),
-                        value = current.find("string");
+                        choiceStringInput = current.find(".string"),
+                        value = choiceStringInput.val();
                     
                     if(value !== ""){
                         choice.setName(value);
@@ -95,6 +98,7 @@
                 }
             });
             
+            poll.setIsPublic(isPublic);
             poll.setChoices(choices);
             pollRegistry.create(poll, pollSuccess, pollFailure);
         });
