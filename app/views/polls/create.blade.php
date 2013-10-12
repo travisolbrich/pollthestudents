@@ -43,12 +43,12 @@ Create a Poll
                             <input class="string span12" type="text" placeholder="Somewhere else..." checked/>
                         </div>
 
-                        <div class="reference choice">
-                        <input class="string span12" type="text" placeholder="Potato Shack" checked/>
+                        <div class="choice">
+                            <input class="string span12" type="text" placeholder="Potato Shack" checked/>
                         </div>
 
-                        <div class="reference choice">
-                        <input id="first" class="string span12" type="text" placeholder="Antonio's Pizza" checked/>
+                        <div class="choice">
+                            <input id="first" class="string span12" type="text" placeholder="Antonio's Pizza" checked/>
                         </div>
                     </div>
                 </div>
@@ -123,23 +123,21 @@ Create a Poll
             //Create options for each option.
             var choices = [], 
                 choiceListing = $(".poll-choices .list"),
+                nonReferenceChoiceListings = choiceListing.find(".choice").not(".reference"),
                 isPublic = $("#isPublic").val(),
                 choiceStringInput;
     
-            choiceListing.find('li').each(function(){
+            nonReferenceChoiceListings.each(function(){
                 // cache jquery var
                 var current = $(this);
                 
-                if(current.hasClass("hidden") == false)
-                {
-                    var choice = new POLL.MODEL.Choice(),
-                        choiceStringInput = current.find(".string"),
-                        value = choiceStringInput.val();
-                    
-                    if(value !== ""){
-                        choice.setName(value);
-                        choices.push(choice);
-                    }
+                var choice = new POLL.MODEL.Choice(),
+                    choiceStringInput = current.find(".string"),
+                    value = choiceStringInput.val();
+                
+                if(value !== ""){
+                    choice.setName(value);
+                    choices.push(choice);
                 }
             });
             
