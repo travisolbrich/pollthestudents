@@ -3,16 +3,7 @@
 @section('pageContent')
     <div class="container-narrow">
 
-      <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="muted">Poll Something New</h3>
-      </div>
-
-      <hr>
+      @include('includes.masthead')
 
       <div class="jumbotron">
         <h1>Create a Poll!</h1>
@@ -24,25 +15,25 @@
 
       <div class="row-fluid marketing">
         <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+          <h4>Be a badass.</h4>
+          <p>Make a poll.</p>
 
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+          <h4>See that big green button?</h4>
+          <p>That button lets you make a poll. It's easy.</p>
 
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          <h4>What is a poll?</h4>
+          <p>A poll is something people can answer. Simple as that.</p>
         </div>
 
         <div class="span6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+          <h4>You've not made a poll yet?</h4>
+          <p>Why not? It's a damn easy button to press.</p>
 
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+          <h4>I can't think of something else witty to say.</h4>
+          <p>So just hit the damn button, already!</p>
 
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          <h4>Made a poll already?</h4>
+          <p>Why not make more? <em>Why not Zoidberg?</em></p>
         </div>
       </div>
 
