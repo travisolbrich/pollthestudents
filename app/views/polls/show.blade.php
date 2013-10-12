@@ -8,6 +8,7 @@
     <div class="header">
         <h1 id="poll-prompt">Poll Name</h1>
     </div>
+    <br>
     <h3>Text your responses to:</h3>
     <h2 class='btn-block disabled'>(210) 526-0691</h2>
     <br>
@@ -18,6 +19,7 @@
             </li>
         </ul>
     </div>
+    <br>
 </div>
     </div>
     <div class="span6">
@@ -269,7 +271,7 @@
                 color = colors[i];
                 choice = choices[i];
                 choiceId = choice.getIdentifier();
-                answersCount = answersMap[choiceId] +1;
+                answersCount = answersMap[choiceId];
                 
                 choiceDisplayString = ("Text " + {{ $poll->id }} + ":" + choiceId + " for '" + choice.getName() +"' (" + answersCount + " vote(s))");
 
