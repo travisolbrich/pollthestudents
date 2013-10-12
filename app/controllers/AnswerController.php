@@ -27,13 +27,6 @@ class AnswerController extends BaseController {
 	 */
 	public function store()
 	{
-		$poll = Poll::findOrFail(Input::get('poll_id'));
-		$choice = Choice::findOrFail(Input::get('choice_id'));
-
-		$answer = new Answer;
-		$answer->choice_id = $choice->id;
-		$answer->poll_id = $poll->id;
-		$answer->save();
 	}
 
 	/**

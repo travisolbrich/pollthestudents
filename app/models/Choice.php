@@ -7,4 +7,8 @@ class Choice extends Eloquent {
 		return $this->hasOne('Poll');
 	}
 
+	public function answers()
+	{
+		return $this->hasMany('Answer');
+	}
 }
