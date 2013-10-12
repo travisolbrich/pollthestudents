@@ -89,14 +89,20 @@ class ApiController extends BaseController {
 		return "Ok";
 	}
 
-	public function getPhoneResponse()
+	public function postPhoneResponse()
 	{
-		
-    header("content-type: text/xml");
+		// Expected format is poll:choice
+		$posted = explode(":", Input::get('Body'));
+	
+		$poll = Poll::find($posted[0]);
+		$choice = $poll->choices()->find($posted[1]);
+
+		if(is_null($poll) || is_null($choice)) return "BAD";    
+header("content-type: text/xml");
     echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     echo "
 <Response>
-    <Message>Hello, Mobile Monkey</Message>
+    <Message>Hello, ".Input::get('Body')."!</Message>
 </Response>";
 	}
 
