@@ -234,10 +234,10 @@
         };
         
         refreshPollChart = function (poll) {
-            var colors = ["#6C853B", "#8F743F", "#303E60", "#733257", "#62753B", 
-                          "#7D6940", "#2F3A54", "#64334F", "#556E24", "#765B27", 
-                          "#1E2C4F", "#5E1F43", "#89A453", "#AB8F57", "#4C5E87", 
-                          "#964C76"],
+            
+            var colors = ["#23BC13", "#3B219E", "#E6C017", "#E11721", "#3C3263", 
+                          "#3C3263", "#E6C017", "#3A7533", "#8D3E42", "#8F813F", 
+                          "#8C74E7", "#6B030", "#80A5902", "#F9EBB0", "#75EE68",	"#AFEEA9"],
                 
                 pollAnswerData = poll.getAnswersMap(), 
                 choices = poll.getChoices(),
@@ -338,7 +338,7 @@
         };
     
         createChoice = function () {
-          
+            
             var choiceList = $(".poll-choices .list"),
                 choiceReference = choiceList.find(".reference"),
                 clone = choiceReference.clone(true);
