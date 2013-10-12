@@ -45,3 +45,7 @@ span.chartkey{
   font-size:30px;
   line-height: 55px;
 }
+
+.center{
+  margin: auto;
+}

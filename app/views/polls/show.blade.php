@@ -16,7 +16,8 @@
         <ul class="list">
             <li class="reference key hidden">
                 <strong><span class="string chartkey" type="text">String</span></strong>
-                <button class="vote-button">Vote this!</button>
+                <br>
+                <button class="btn vote-button">Vote this!</button>
             </li>
         </ul>
     </div>
