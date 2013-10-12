@@ -21,12 +21,17 @@
     <div class="header">
         <h2>Respond</h2>
     </div>          
-    <div>
-        <select id="poll-choices">
-            <option class="reference choice hidden" value=""></option>
-        </select>
+    <div id="poll-choices">
+        <ul class="list">
+            <li class="reference choice hidden">
+    			<button class="answer-button">Choose</button>
+                <span class="string" type="text">Poll Choice</span>
+            </li>
+        </ul>
     </div>
     <span id="select-answer-message" class="hidden">You must select an answer!</span>
+    <br>
+    <br>
     <button id="submit-answer">Submit Answer</button>
 </div>
     
@@ -68,6 +73,7 @@
             
             pollLoadError,
             
+            submitAnswer,
             showSelectAnswerHelp,
             hideSelectAnswerHelp,
             hideAnswerSubmit,
@@ -142,25 +148,33 @@
             
             var choices = poll.getChoices(),
                 choice,
+                choiceId,
                 
-                choiceList = $("#poll-choices"),
-                choiceReference = choiceList.find(".reference"),
-                nonChoiceReferences = choiceList.find(".choice").not(".reference"),
+                pollChoicesDom = $("#poll-choices"),
+                pollChoicesList = pollChoicesDom.find(".list"),
+                pollChoicesListReference = pollChoicesList.find(".reference"),
+                pollChoicesListNonReferences = pollChoicesList.find(".choice").not(".reference"),
                 clone = null,
+
+                cloneButton,
+                cloneString,
             
                 i = 0;
             
-            nonChoiceReferences.remove();
+            pollChoicesListNonReferences.remove();
             
             for(i = 0; i < choices.length; i += 1)
             {
                 choice = choices[i];
+                choiceId = choice.getIdentifier();
 
-                clone = choiceReference.clone(true);
+                clone = pollChoicesListReference.clone(true);
                 clone.toggleClass("hidden").toggleClass("reference");
-                clone.text(choice.getName());
-                clone.val(choice.getIdentifier());
-                choiceList.append(clone);
+                cloneString = clone.find(".string");
+                cloneString.text(choice.getName());
+                cloneButton = clone.find(".answer-button");
+                cloneButton.click(choiceId, submitAnswer);
+                pollChoicesList.append(clone);
             }
             
             //Refresh the choices listing.
@@ -229,6 +243,7 @@
             loadPoll(pollId);
         });
         
+        /*
         $( "#submit-answer" ).click(function() {
             
             //Create options for each option.
@@ -250,6 +265,25 @@
                 answerRegistry.create(answer, showAnswerSubmitSuccess, showAnswerSubmitFailure);
             }
         });
+		*/
+
+        submitAnswer = function (event) {
+
+        	var choiceId = event.data;
+            if(choiceId === "")
+            {
+                showSelectAnswerHelp();
+                
+            } else {
+                
+                hideSelectAnswerHelp();
+                answer = new POLL.MODEL.Answer();
+                answer.setPollId(pollId);
+                answer.setChoiceId(choiceId);
+                
+                answerRegistry.create(answer, showAnswerSubmitSuccess, showAnswerSubmitFailure);
+            }
+        };
         
         showSelectAnswerHelp = function () {
             var help = $("#select-answer-message");
