@@ -9,7 +9,7 @@ class Answer extends Eloquent {
 
 	public function choice()
 	{
-		return $this->hasOne('choice');
+		return $this->belongsTo('choice');
 	}
 
 }

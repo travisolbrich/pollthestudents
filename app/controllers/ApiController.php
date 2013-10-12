@@ -97,13 +97,17 @@ class ApiController extends BaseController {
 		$poll = Poll::find($posted[0]);
 		$choice = $poll->choices()->find($posted[1]);
 
-		if(is_null($poll) || is_null($choice)) return "BAD";    
-header("content-type: text/xml");
-    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-    echo "
-<Response>
-    <Message>Hello, ".Input::get('Body')."!</Message>
-</Response>";
+		// Catch invalid responses
+		if(is_null($poll) || is_null($choice)) return View::make('phone.error');
+
+		$answer = new Answer;
+		$answer->choice_id = $choice->id;
+		$answer->poll_id = $poll->id;
+		$answer->save();
+
+		// Let them know all is good
+		return View::make('phone.success')
+			->with('answer', $answer);
 	}
 
 }
