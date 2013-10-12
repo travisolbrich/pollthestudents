@@ -16,6 +16,7 @@
         <ul class="list">
             <li class="reference key hidden">
                 <strong><span class="string chartkey" type="text">String</span></strong>
+                <button class="vote-button">Vote this!</button>
             </li>
         </ul>
     </div>
@@ -45,9 +46,7 @@
     <span id="select-answer-message" class="hidden">You must select an answer!</span>
 </div> -->
     
-
-    
-<!-- <div id="success" class="hidden">            
+<div id="success" class="hidden center">            
     <div class="header">
         <h2>Success!</h2>
     </div>            
@@ -56,14 +55,14 @@
     </div>
 </div>
 
-<div id="error" class="hidden">            
+<div id="error" class="hidden center">            
     <div class="header">
         <h1>Woops!</h1>
     </div>            
     <div id="poll-error">
         <p>An error occured. Uhhhh...</p>
     </div>
-</div> -->
+</div>
 
 @stop
 @section('javascripts')
@@ -252,6 +251,7 @@
                 nonReferenceChartKeys = chartKeysList.find(".key").not(".reference"),
                 
                 chartKey,
+                chartVoteButton,
                 chartKeyCopy,
                 
                 color,
@@ -278,6 +278,10 @@
                 chartKeyCopy = chartKeyReference.clone(true);
                 chartKeyCopy.toggleClass("hidden").toggleClass("reference");
                 chartKeyCopy.find(".string").text(choiceDisplayString).css( "color", color);
+
+                chartVoteButton = chartKeyCopy.find(".vote-button");
+                chartVoteButton.click(choiceId, submitAnswer);
+
                 chartKeysList.append(chartKeyCopy);
                 
                 chartData.push({'value': answersCount, 'color': color});
@@ -351,7 +355,7 @@
         };
                 
         hideAnswerSubmit = function () {
-            $("#submit-answer").toggleClass("hidden");
+            $(".vote-button").toggleClass("hidden").off();
         };
         
         showAnswerSubmitSuccess = function () {
