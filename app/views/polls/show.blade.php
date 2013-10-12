@@ -32,6 +32,17 @@
     <span id="select-answer-message" class="hidden">You must select an answer!</span>
 </div>
     
+<div id="chart-section">
+    <canvas id="showChart" width="400" height="400"></canvas>
+    <div id="chart-keys">
+        <ul class="list">
+            <li class="reference key hidden">
+                <span class="string" type="text">String</span>
+            </li>
+        </ul>
+    </div>
+</div>
+    
 <div id="success" class="hidden">            
     <div class="header">
         <h2>Success!</h2>
@@ -67,6 +78,7 @@
             refreshPollWithData,
             refreshPollChoices,
             refreshPollVisuals,
+            refreshPollChart,
             
             pollLoadError,
             
@@ -137,6 +149,7 @@
             
             refreshPollChoices(poll);
             refreshPollVisuals(poll);
+            refreshPollChart(poll);
             
             return poll;
         };
@@ -218,6 +231,50 @@
               //Refresh Visuals
         };
         
+        refreshPollChart = function (poll) {
+            var colors = ["#F7464A", "#E2EAE9", "#D4CCC5", "#949FB1", "#4D5360", "#F7464A", "#E2EAE9", "#D4CCC5", "#949FB1", "#4D5360"],
+                pollAnswerData = poll.getAnswersMap(), 
+                choices = poll.getChoices(),
+                answersMap = poll.getAnswersMap(),
+                
+                chartKeysDom = $("#chart-keys"),
+                chartKeysList = chartKeysDom.find(".list"),
+                
+                
+                chartKeyReference = chartKeysList.find(".reference"),
+                nonReferenceChartKeys = chartKeysList.find(".key").not(".reference"),
+                
+                chartKey,
+                chartKeyCopy,
+                
+                color,
+                choice,
+                choiceId,
+                answersCount = answersMap[choiceId],
+                
+                chartData = [],
+                //Get context with jQuery - using jQuery's .get() method.
+                ctx = $("#showChart").get(0).getContext("2d");
+                //This will get the first returned node in the jQuery collection.
+                
+            for(i = 0; i < choices.length; i += 1)
+            {
+                color = colors[i];
+                choice = choices[i];
+                choiceId = choice.getIdentifier();
+                answersCount = answersMap[choiceId];
+                
+                chartKeyCopy = chartKeyReference.clone(true);
+                chartKeyCopy.toggleClass("hidden").toggleClass("reference");
+                chartKeyCopy.find(".string").text(choice.getName()).css( "color", color);
+                chartKeysList.append(chartKeyCopy);
+                
+                chartData.push({'value': answersCount, 'color': color});
+            }
+        
+            new Chart(ctx).Pie(chartData);
+        };
+        
         pollLoadError = function () {
             
             //Ahhhh
@@ -242,30 +299,6 @@
         $( "#refresh-button" ).click(function() {
             loadPoll(pollId);
         });
-        
-        /*
-        $( "#submit-answer" ).click(function() {
-            
-            //Create options for each option.
-            var answer,
-                selectedChoice = $( "#poll-choices option:selected" ),
-                choiceId = selectedChoice.val();
-    
-            if(choiceId === "")
-            {
-                showSelectAnswerHelp();
-                
-            } else {
-                
-                hideSelectAnswerHelp();
-                answer = new POLL.MODEL.Answer();
-                answer.setPollId(pollId);
-                answer.setChoiceId(choiceId);
-                
-                answerRegistry.create(answer, showAnswerSubmitSuccess, showAnswerSubmitFailure);
-            }
-        });
-		*/
 
         submitAnswer = function (event) {
 
