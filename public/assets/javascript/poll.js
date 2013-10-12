@@ -153,6 +153,7 @@ POLL.MODEL.Poll = (function () {
                 this.setChoices(choices);
                 this.setAnswersMap(data.responses);
                 
+                this.setIdentifier(data.id);
                 this.setPrompt(data.prompt);
                 this.setIsPublic(data.is_public);
                 this.setCreationDate(data.creation_date);
@@ -487,7 +488,7 @@ POLL.REGISTRY.PollRegistry = (function () {
         CREATE_URL = (MODEL_URL),    //POST  
         READ_URL = (MODEL_URL),      //GET
         SEARCH_URL = (MODEL_URL),      //GET
-        SEARCH_RECENT_URL = ('/recent-polls'),      //GET
+        SEARCH_RECENT_URL = (POLL.INFO.BaseUrl + '/recent-polls'),      //GET
         UPDATE_URL = (MODEL_URL),    //PUT
         DELETE_URL = (MODEL_URL);    //DELETE
     

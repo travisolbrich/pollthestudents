@@ -30,9 +30,6 @@
         </ul>
     </div>
     <span id="select-answer-message" class="hidden">You must select an answer!</span>
-    <br>
-    <br>
-    <button id="submit-answer">Submit Answer</button>
 </div>
     
 <div id="success" class="hidden">            

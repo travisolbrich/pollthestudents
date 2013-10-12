@@ -17,13 +17,6 @@ Poll Something New
 
   <hr>
     
-    <div id="recent-polls">
-        <ul class="list">
-            <li class="reference poll hidden">
-                <a class="string small" href="">This is the reference...</a>
-            </li>
-        </ul>
-    </div>
 @stop
 @section('javascripts')
 <script type="text/javascript">
@@ -72,7 +65,7 @@ Poll Something New
                 pollPrompt = poll.getPrompt();
                 pollIdentifier = poll.getIdentifier();
 
-                address = ('/poll/'+pollId);
+                address = ('/poll/'+pollIdentifier);
                 
                 clone = pollReference.clone(true);
                 clone.toggleClass("hidden").toggleClass("reference");
@@ -90,12 +83,11 @@ Poll Something New
             $("#recent-polls").toggleClass("hidden");
         };
     
+    refreshData();
     });
     
 </script>
-        
-      <hr>
-
+      
       <div class="row-fluid marketing">
         <div class="span6">
           <h4>Be awesome.</h4>
@@ -109,14 +101,17 @@ Poll Something New
         </div>
 
         <div class="span6">
-          <h4>You've not made a poll yet?</h4>
-          <p>Why not? It's a really easy button to press.</p>
-
-          <h4>I can't think of something else witty to say.</h4>
-          <p>So just hit the button, already!</p>
-
-          <h4>Made a poll already?</h4>
-          <p>Why not make more? <em>Why not Zoidberg?</em></p>
+          <h4>Recent Polls</h4>
+          <div id="recent-polls">
+              <ul class="list">
+                  <li class="reference poll hidden">
+                      <a class="string small" href="">This is the reference...</a>
+                  </li>
+              </ul>
+          </div>
+          <p></p>
+          <h4>What is a poll?</h4>
+          <p>A poll is something people can answer. Simple as that.</p>
         </div>
       </div>
 
