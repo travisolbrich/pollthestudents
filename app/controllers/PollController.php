@@ -32,7 +32,7 @@ class PollController extends BaseController {
 		$poll = new Poll;
 
 		$poll->prompt = Input::get('prompt');
-		$poll->is_public = Input::get('is_public'); 
+		$poll->is_public = Input::get('is_public') == 'true' ? 1 : 0; 
 
 		// Validate the poll
 		$pollValidator = Validator::make(

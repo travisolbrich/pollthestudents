@@ -10,7 +10,7 @@ var POLL = POLL || {
 };
 
 POLL.INFO = {
-    BaseUrl: ""
+    BaseUrl: ''
 };
 
 POLL.MODEL = {
@@ -290,6 +290,14 @@ POLL.MARSHALLER.PollMarshaller = (function () {
     
     PollMarshaller.prototype = {
         
+        marshallSingle: function (data) {
+            
+            var polls = this.marshall([data]),
+                poll = polls[0];
+            
+            return poll;
+        },
+        
         marshall: function (data) {
             
             var polls,
@@ -357,6 +365,15 @@ POLL.MARSHALLER.ChoiceMarshaller = (function () {
     ChoiceMarshaller = function () {};
     
     ChoiceMarshaller.prototype = {
+        
+        marshallSingle: function (data) {
+            
+            var choiceData = [data],
+                choices = this.marshall(choiceData),
+                choice = choices[0];
+            
+            return choice;
+        },
         
         marshall: function (data) {
             
