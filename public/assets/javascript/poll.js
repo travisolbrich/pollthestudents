@@ -176,11 +176,11 @@ POLL.MODEL.Choice = (function () {
             }
         },
         
-        getPollIdentifier: function () {
+        getPollId: function () {
             return this.poll_id;
         },
         
-        setPollIdentifier:  function (value) {
+        setPollId:  function (value) {
             if (value !== undefined) {
                 this.poll_id = value;
             }
@@ -200,7 +200,7 @@ POLL.MODEL.Choice = (function () {
             if (data !== null) {
                 this.setName(data.name);
                 this.identifier(data.id);
-                this.pollIdentifier(data.poll_id);
+                this.pollId(data.poll_id);
             }
         }
     };

@@ -1,9 +1,10 @@
+@extends('layouts.master')
+
+@section('pageContent')
+
 <div id="view">            
     <div class="header">
-        <h1>Poll Name</h1>
-    </div>            
-    <div class="poll-info">
-        <span id="poll-prompt">What is your favorite place to eat?</span>
+        <h1 id="poll-prompt">Poll Name</h1>
     </div>
     <div class="poll-answers">
         <ul class="list">
@@ -12,18 +13,19 @@
             </li>
         </ul>
     </div>
+    <button id="refresh-button">Refresh</button>
 </div>
 
 <div id="submit-answer">            
     <div class="header">
         <h2>Respond</h2>
     </div>          
-    <div class="poll-choices">
-        <select>
-            <option class="reference choice hidden" value="ID"></option>
+    <div>
+        <select id="poll-choices">
+            <option class="reference choice hidden" value=""></option>
         </select>
     </div>
-    
+    <span id="select-answer-message" class="hidden">You must select an answer!</span>
     <button id="submit-answer">Submit Answer</button>
 </div>
     
@@ -47,22 +49,23 @@
 
 <script type="text/javascript">
     
-    $(document).ready(function() {
-        
         var pollRegistry = new POLL.REGISTRY.PollRegistry(), 
             answerRegistry = new POLL.REGISTRY.AnswerRegistry(),
             pollMarshaller = new POLL.MARSHALLER.PollMarshaller(),
             
             getPollId,
             pollId,
-            poll,
             loadPoll,
             
-            refreshPoll,
-            refreshChoices,
+            debugGetSamplePoll,
+            refreshPollWithData,
+            refreshPollChoices,
             refreshPollVisuals,
+            
             pollLoadError,
             
+            showSelectAnswerHelp,
+            hideSelectAnswerHelp,
             hideAnswerSubmit,
             showAnswerSubmitSuccess;
         
@@ -76,46 +79,87 @@
         
         pollId = getPollId();
         
-        loadPoll = function () {
+        loadPoll = function (pollId) {
+            
             pollRegistry.read(pollId, refreshPoll, pollLoadError);
+            //refreshPollWithData();  //Debug
         };
         
-        refreshPoll = function (data) {
+        debugGetSamplePoll = function () {
             
-            poll = pollMarshaller.marshallSingle(data);
+            var poll = new POLL.MODEL.Poll(),
+                choices = [],
+                choice;
             
-            refreshChoices();
-            refreshPollVisuals();
+            poll.setIdentifier(1);
+            poll.setPrompt("Sample Poll");
+            poll.setChoices(choices);
+            
+            choice = new POLL.MODEL.Choice();
+            choice.setPollId(1);
+            choice.setIdentifier(1);
+            choice.setName("First Choice");
+            choices.push(choice);
+            
+            choice = new POLL.MODEL.Choice();
+            choice.setPollId(1);
+            choice.setIdentifier(2);
+            choice.setName("Second Choice");
+            choices.push(choice);
+            
+            choice = new POLL.MODEL.Choice();
+            choice.setPollId(1);
+            choice.setIdentifier(3);
+            choice.setName("Third Choice");
+            choices.push(choice);
+            
+            return poll;
         };
         
-        refreshChoices = function () {
+        refreshPollWithData = function (data) {
+            
+            //debugGetSamplePoll(); 
+            var poll = pollMarshaller.marshallSingle(data);
+            
+            refreshPollChoices(poll);
+            refreshPollVisuals(poll);
+            
+            return poll;
+        };
+        
+        refreshPollChoices = function (poll) {
             
             var choices = poll.getChoices(),
                 choice,
                 
-                choiceListing = $(".poll-choices .list"),
+                choiceList = $("#poll-choices"),
                 choiceReference = choiceList.find(".reference"),
-                clone = null;
+                nonChoiceReferences = choiceList.find(".choice").not(".reference"),
+                clone = null,
             
                 i = 0;
+            
+            nonChoiceReferences.remove();
             
             for(i = 0; i < choices.length; i += 1)
             {
                 choice = choices[i];
 
                 clone = choiceReference.clone(true);
+                clone.toggleClass("hidden").toggleClass("reference");
                 clone.text(choice.getName());
-                clone.value(choice.getIdentifier());
+                clone.val(choice.getIdentifier());
+                choiceList.append(clone);
             }
-            
             
             //Refresh the choices listing.
         };
         
-        refreshPollVisuals = function () {
+        refreshPollVisuals = function (poll) {
             
+            var promptDom = $( "#poll-prompt" );
             
-            
+            promptDom.text(poll.getPrompt());
               //Refresh Visuals
         };
         
@@ -140,21 +184,42 @@
             createChoice();
         });
         
+        $( "#refresh-button" ).click(function() {
+            loadPoll(pollId);
+        });
+        
         $( "#submit-answer" ).click(function() {
             
             //Create options for each option.
             var answer,
                 selectedChoice = $( "#poll-choices option:selected" ),
-                choiceId = selectedChoice.val(),
-                pollId = poll.getId();
+                choiceId = selectedChoice.val();
     
-            answer = new POLL.REGISTRY.Answer();
-            answer.setPollId(pollId);
-            answer.setChoiceId(choiceId);
-            
-            answerRegistry.create(answer);
+            if(choiceId === "")
+            {
+                showSelectAnswerHelp();
+                
+            } else {
+                
+                hideSelectAnswerHelp();
+                answer = new POLL.MODEL.Answer();
+                answer.setPollId(pollId);
+                answer.setChoiceId(choiceId);
+                
+                answerRegistry.create(answer);
+            }
         });
         
+        showSelectAnswerHelp = function () {
+            var help = $("#select-answer-message");
+            help.removeClass("hidden");
+        };
+    
+        hideSelectAnswerHelp = function () {
+            var help = $("#select-answer-message");
+            help.addClass("hidden");
+        };
+    
         createChoice = function () {
           
             var choiceList = $(".poll-choices .list"),
@@ -175,5 +240,6 @@
             hideAnswerSubmit();
         };
         
-    });
+        loadPoll();
 </script>
+@stop
