@@ -40,3 +40,8 @@ body {
 .choice{
   margin-bottom: 20px;
 }
+
+span.chartkey{
+  font-size:30px;
+  line-height: 30px;
+}

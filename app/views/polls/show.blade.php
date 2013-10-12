@@ -2,21 +2,30 @@
 
 @section('content')
 
-<div id="view">            
+<div class="row-fluid">
+    <div class="span6">
+        <div id="view">            
     <div class="header">
         <h1 id="poll-prompt">Poll Name</h1>
     </div>
-    <div id="poll-answers">
+    <h3>Text your responses to (210) 526-0691</h3>
+    <div id="chart-keys">
         <ul class="list">
-            <li class="reference answer hidden">
-                <span class="string" type="text">Poll Choice</span>
-                <span class="count" type="text">Count</span>
+            <li class="reference key hidden">
+                <strong><span class="string" type="text">String</span></strong>
             </li>
         </ul>
     </div>
-    <button id="refresh-button">Refresh</button>
+</div>
+    </div>
+    <div class="span6">
+        <div id="chart-section">
+    <canvas id="showChart" width="450" height="450"></canvas>
+</div>
+    </div>
 </div>
 
+<!-- 
 <div id="submit-answer">            
     <div class="header">
         <h2>Respond</h2>
@@ -24,26 +33,17 @@
     <div id="poll-choices">
         <ul class="list">
             <li class="reference choice hidden">
-    			<button class="answer-button">Choose</button>
+                <button class="answer-button">Choose</button>
                 <span class="string" type="text">Poll Choice</span>
             </li>
         </ul>
     </div>
     <span id="select-answer-message" class="hidden">You must select an answer!</span>
-</div>
+</div> -->
     
-<div id="chart-section">
-    <canvas id="showChart" width="400" height="400"></canvas>
-    <div id="chart-keys">
-        <ul class="list">
-            <li class="reference key hidden">
-                <span class="string" type="text">String</span>
-            </li>
-        </ul>
-    </div>
-</div>
+
     
-<div id="success" class="hidden">            
+<!-- <div id="success" class="hidden">            
     <div class="header">
         <h2>Success!</h2>
     </div>            
@@ -59,7 +59,7 @@
     <div id="poll-error">
         <p>An error occured. Uhhhh...</p>
     </div>
-</div>
+</div> -->
 
 @stop
 @section('javascripts')
@@ -219,7 +219,7 @@
                 choiceId = choice.getIdentifier();
                 answersCount = answersMap[choiceId];
 
-                choiceDisplayString = ("" + choice.getName() + " (text " + {{ $poll->id }} + ":" + choiceId + ")");
+                
 
                 clone = pollAnswersListReference.clone(true);
                 clone.toggleClass("hidden").toggleClass("reference");
@@ -264,9 +264,11 @@
                 choiceId = choice.getIdentifier();
                 answersCount = answersMap[choiceId];
                 
+                choiceDisplayString = ("Text " + {{ $poll->id }} + ":" + choiceId + " for '" + choice.getName() +"' (" + answersCount + " responses)");
+
                 chartKeyCopy = chartKeyReference.clone(true);
                 chartKeyCopy.toggleClass("hidden").toggleClass("reference");
-                chartKeyCopy.find(".string").text(choice.getName()).css( "color", color);
+                chartKeyCopy.find(".string").text(choiceDisplayString).css( "color", color);
                 chartKeysList.append(chartKeyCopy);
                 
                 chartData.push({'value': answersCount, 'color': color});
