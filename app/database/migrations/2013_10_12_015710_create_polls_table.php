@@ -15,7 +15,7 @@ class CreatePollsTable extends Migration {
 		Schema::create('polls', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('prompt');
-			$table->boolean('public', true);
+			$table->boolean('is_public', true);
 			$table->timestamps();
 		});
 	}

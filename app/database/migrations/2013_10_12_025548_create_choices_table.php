@@ -17,7 +17,7 @@ class CreateChoicesTable extends Migration {
 			$table->string('name');
 			$table->timestamps();
 
-			$table->foreign('poll_id')->references('id')->on('polls');
+			$table->foreign('poll_id')->references('id')->on('polls')->onDelete('cascade');
 		});
 	}
 
