@@ -8,3 +8,5 @@ refilldb.sh
 /api
 *.swp
 public/uploads/
+
+test.html

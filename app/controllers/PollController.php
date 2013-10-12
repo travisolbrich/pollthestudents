@@ -79,7 +79,10 @@ class PollController extends BaseController {
 	 */
 	public function show($id)
 	{
-        return View::make('polls.show');
+        $poll = Poll::findOrFail($id);
+
+        return View::make('polls.show')
+        	->with('poll', $poll);
 	}
 
 	/**

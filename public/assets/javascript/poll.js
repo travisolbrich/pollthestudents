@@ -10,7 +10,7 @@ var POLL = POLL || {
 };
 
 POLL.INFO = {
-    BaseUrl: "localhost"
+    BaseUrl: ""
 };
 
 POLL.MODEL = {
