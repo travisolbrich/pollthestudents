@@ -6,10 +6,11 @@
     <div class="header">
         <h1 id="poll-prompt">Poll Name</h1>
     </div>
-    <div class="poll-answers">
+    <div id="poll-answers">
         <ul class="list">
             <li class="reference answer hidden">
-                <span class="string" type="text"></span>
+                <span class="string" type="text">Poll Choice</span>
+                <span class="count" type="text">Count</span>
             </li>
         </ul>
     </div>
@@ -52,7 +53,6 @@
 
 <script type="text/javascript">
     
-    $(document).ready(function() {
         var pollRegistry = new POLL.REGISTRY.PollRegistry(), 
             answerRegistry = new POLL.REGISTRY.AnswerRegistry(),
             pollMarshaller = new POLL.MARSHALLER.PollMarshaller(),
@@ -92,6 +92,7 @@
         debugGetSamplePoll = function () {
             
             var poll = new POLL.MODEL.Poll(),
+                answerMap = {},
                 choices = [],
                 choice;
             
@@ -117,12 +118,17 @@
             choice.setName("Third Choice");
             choices.push(choice);
             
+            answerMap["1"] = 1;
+            answerMap["2"] = 2;
+            answerMap["3"] = 3;
+            poll.setAnswersMap(answerMap);
+            
             return poll;
         };
         
         refreshPollWithData = function (data) {
             
-            //debugGetSamplePoll(); 
+            //var poll = debugGetSamplePoll(); 
             var poll = pollMarshaller.marshallSingle(data);
             
             refreshPollChoices(poll);
@@ -161,9 +167,39 @@
         
         refreshPollVisuals = function (poll) {
             
-            var promptDom = $( "#poll-prompt" );
+            var promptDom = $( "#poll-prompt" ),
+                
+                choices = poll.getChoices(),
+                choice,
+                choiceId,
+                answersMap = poll.getAnswersMap(),
+                
+                pollAnswersDom = $( "#poll-answers" ),
+                pollAnswersList = pollAnswersDom.find(".list"),
+                pollAnswersListReference = pollAnswersList.find(".reference"),
+                pollAnswersListNonReferences = pollAnswersList.find(".answer").not(".reference"),
+                clone = null,
+            
+                i = 0;
             
             promptDom.text(poll.getPrompt());
+            
+            //Clear the listing.
+            pollAnswersListNonReferences.remove();
+            
+            for(i = 0; i < choices.length; i += 1)
+            {
+                choice = choices[i];
+                choiceId = choice.getIdentifier();
+                answersCount = answersMap[choiceId];
+                
+                clone = pollAnswersListReference.clone(true);
+                clone.toggleClass("hidden").toggleClass("reference");
+                clone.find(".string").text(choice.getName());
+                clone.find(".count").text(answersCount);
+                pollAnswersList.append(clone);
+            }
+            
               //Refresh Visuals
         };
         
@@ -245,8 +281,5 @@
         };
         
         loadPoll(pollId);
-    }); //save
-
-
 </script>
 @stop

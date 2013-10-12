@@ -10,13 +10,14 @@ var POLL = POLL || {
 };
 
 POLL.INFO = {
-    BaseUrl: ''
+    BaseUrl: 'api'
 };
 
 POLL.MODEL = {
     Poll: null,
     Choice: null,
-    Answer: null
+    Answer: null,
+    AnswerCount: null
 };
 
 POLL.MODEL.Poll = (function () {
@@ -74,6 +75,16 @@ POLL.MODEL.Poll = (function () {
         setAnswers: function (value) {
             if (value !== undefined) {
                 this.answers = value;
+            }
+        },
+        
+        getAnswersMap: function () {
+            return this.responses;
+        },
+        
+        setAnswersMap: function (value) {
+            if (value !== undefined) {
+                this.responses = value;
             }
         },
         
@@ -138,6 +149,8 @@ POLL.MODEL.Poll = (function () {
                 
                 this.setAnswers(answers);
                 this.setChoices(choices);
+                this.setAnswersCountMap(data.responses);
+                
                 this.setPrompt(data.prompt);
                 this.setIsPublic(data.is_public);
                 this.setCreationDate(data.creation_date);
@@ -468,12 +481,13 @@ POLL.REGISTRY.PollRegistry = (function () {
     'use strict';
     
     var PollRegistry,
-        POLL_URL = (POLL.INFO.BaseUrl + "/poll"),
-        CREATE_URL = (POLL_URL),    //POST  
-        READ_URL = (POLL_URL),      //GET
-        SEARCH_URL = (POLL_URL),      //GET
-        UPDATE_URL = (POLL_URL),    //PUT
-        DELETE_URL = (POLL_URL);    //DELETE
+        MODEL_URL = (POLL.INFO.BaseUrl + "/poll"),
+        CREATE_URL = (MODEL_URL),    //POST  
+        READ_URL = (MODEL_URL),      //GET
+        SEARCH_URL = (MODEL_URL),      //GET
+        SEARCH_RECENT_URL = ('/recent-polls'),      //GET
+        UPDATE_URL = (MODEL_URL),    //PUT
+        DELETE_URL = (MODEL_URL);    //DELETE
     
     PollRegistry = function () {};
     
@@ -484,13 +498,16 @@ POLL.REGISTRY.PollRegistry = (function () {
         },
         
         read: function (identifier, callback, error) {
-            POLL.REGISTRY.Registry.read(READ_URL, {"identifier" : identifier}, callback, error);
+            POLL.REGISTRY.Registry.read(READ_URL, {"id" : identifier}, callback, error);
         },
         
         search: function (parameters, callback, error) {
             POLL.REGISTRY.Registry.search(SEARCH_URL, parameters, callback, error);
-        }
+        },
         
+        searchRecent: function (count, callback, error) {
+            POLL.REGISTRY.Registry.search(SEARCH_RECENT_URL, { "count" : count }, callback, error);
+        }
     };
     
     return PollRegistry;
@@ -500,12 +517,12 @@ POLL.REGISTRY.AnswerRegistry = (function () {
     'use strict';
     
     var AnswerRegistry,
-        POLL_URL = (POLL.INFO.BaseUrl + "/answer"),
-        CREATE_URL = (POLL_URL),    //POST  
-        READ_URL = (POLL_URL),      //GET
-        SEARCH_URL = (POLL_URL),      //GET
-        UPDATE_URL = (POLL_URL),    //PUT
-        DELETE_URL = (POLL_URL);    //DELETE
+        MODEL_URL = (POLL.INFO.BaseUrl + "/answer"),
+        CREATE_URL = (MODEL_URL),    //POST
+        READ_URL = (MODEL_URL),      //GET
+        SEARCH_URL = (MODEL_URL),      //GET
+        UPDATE_URL = (MODEL_URL),    //PUT
+        DELETE_URL = (MODEL_URL);    //DELETE
     
     AnswerRegistry = function () {};
     
@@ -516,7 +533,7 @@ POLL.REGISTRY.AnswerRegistry = (function () {
         },
         
         read: function (identifier, callback, error) {
-            POLL.REGISTRY.Registry.read(READ_URL, {"identifier" : identifier}, callback, error);
+            POLL.REGISTRY.Registry.read(READ_URL, {"id" : identifier}, callback, error);
         }
 
     };
@@ -528,12 +545,12 @@ POLL.REGISTRY.ChoiceRegistry = (function () {
     'use strict';
     
     var ChoiceRegistry,
-        POLL_URL = (POLL.INFO.BaseUrl + "/choice"),
-        CREATE_URL = (POLL_URL),    //POST  
-        READ_URL = (POLL_URL),      //GET
-        SEARCH_URL = (POLL_URL),      //GET
-        UPDATE_URL = (POLL_URL),    //PUT
-        DELETE_URL = (POLL_URL);    //DELETE
+        MODEL_URL = (POLL.INFO.BaseUrl + "/choice"),
+        CREATE_URL = (MODEL_URL),    //POST  
+        READ_URL = (MODEL_URL),      //GET
+        SEARCH_URL = (MODEL_URL),      //GET
+        UPDATE_URL = (MODEL_URL),    //PUT
+        DELETE_URL = (MODEL_URL);    //DELETE
     
     ChoiceRegistry = function () {};
     
@@ -544,7 +561,7 @@ POLL.REGISTRY.ChoiceRegistry = (function () {
         },
         
         read: function (identifier, callback, error) {
-            POLL.REGISTRY.Registry.read(READ_URL, {"identifier" : identifier}, callback, error);
+            POLL.REGISTRY.Registry.read(READ_URL, {"id" : identifier}, callback, error);
         }
 
     };
