@@ -53,6 +53,22 @@ class PollController extends BaseController {
 
 			if($choiceValidator->fails()) return Response::json($choiceValidator->messages(), 400);
 		}
+
+		// Everything's correct, insert it.
+
+		// Create the poll
+		$poll->save();
+
+		// Create the choices
+		foreach(Input::get('choices') as $choice)
+		{
+			$newChoice = new Choice;
+			$newChoice->name = $choice['name'];
+
+			$poll->choices()->save($newChoice);
+		}
+
+
 	}
 
 	/**

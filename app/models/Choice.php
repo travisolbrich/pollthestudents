@@ -1,5 +1,10 @@
 <?php
 
-class Poll extends Eloquent {
-	
+class Choice extends Eloquent {
+
+	public function poll()
+	{
+		return $this->hasOne('Poll');
+	}
+
 }

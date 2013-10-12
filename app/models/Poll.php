@@ -1,7 +1,9 @@
 <?php
 
 class Poll extends Eloquent {
-	protected $guarded = array();
 
-	public static $rules = array();
+	public function choices()
+	{
+		return $this->hasMany('Choice');
+	}
 }

@@ -13,8 +13,11 @@ class CreateChoicesTable extends Migration {
 	{
 		Schema::create('choices', function($table) {
 			$table->increments('id');
+			$table->integer('poll_id')->unsigned();
 			$table->string('name');
 			$table->timestamps();
+
+			$table->foreign('poll_id')->references('id')->on('polls');
 		});
 	}
 
