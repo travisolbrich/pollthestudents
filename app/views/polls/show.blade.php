@@ -186,7 +186,8 @@
                 
                 choices = poll.getChoices(),
                 choice,
-                choiceId,
+                choicedId,
+                choiceDisplayString,
                 answersMap = poll.getAnswersMap(),
                 
                 pollAnswersDom = $( "#poll-answers" ),
@@ -207,10 +208,12 @@
                 choice = choices[i];
                 choiceId = choice.getIdentifier();
                 answersCount = answersMap[choiceId];
-                
+
+                choiceDisplayString = ("" + choice.getName() + " (text " + {{ $poll->id }} + ":" + choiceId + ")");
+
                 clone = pollAnswersListReference.clone(true);
                 clone.toggleClass("hidden").toggleClass("reference");
-                clone.find(".string").text(choice.getName());
+                clone.find(".string").text(choiceDisplayString);
                 clone.find(".count").text(answersCount);
                 pollAnswersList.append(clone);
             }
