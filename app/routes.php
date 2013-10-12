@@ -16,5 +16,6 @@ Route::get('/', function()
 	return View::make('home');
 });
 
+Route::controller('api', 'ApiController');
 Route::resource('answer', 'AnswerController');
 Route::resource('poll', 'PollController');

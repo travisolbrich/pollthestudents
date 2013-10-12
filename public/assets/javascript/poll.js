@@ -484,11 +484,11 @@ POLL.REGISTRY.PollRegistry = (function () {
         },
         
         read: function (identifier, callback, error) {
-            POLL.REGISTRY.Registry.create(READ_URL, {"identifier" : identifier}, callback, error);
+            POLL.REGISTRY.Registry.read(READ_URL, {"identifier" : identifier}, callback, error);
         },
         
         search: function (parameters, callback, error) {
-            POLL.REGISTRY.Registry.create(SEARCH_URL, parameters, callback, error);
+            POLL.REGISTRY.Registry.search(SEARCH_URL, parameters, callback, error);
         }
         
     };
@@ -516,7 +516,7 @@ POLL.REGISTRY.AnswerRegistry = (function () {
         },
         
         read: function (identifier, callback, error) {
-            POLL.REGISTRY.Registry.create(READ_URL, {"identifier" : identifier}, callback, error);
+            POLL.REGISTRY.Registry.read(READ_URL, {"identifier" : identifier}, callback, error);
         }
 
     };
@@ -544,7 +544,7 @@ POLL.REGISTRY.ChoiceRegistry = (function () {
         },
         
         read: function (identifier, callback, error) {
-            POLL.REGISTRY.Registry.create(READ_URL, {"identifier" : identifier}, callback, error);
+            POLL.REGISTRY.Registry.read(READ_URL, {"identifier" : identifier}, callback, error);
         }
 
     };

@@ -1,6 +1,6 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
-@section('pageContent')
+@section('content')
 
 <div id="view">            
     <div class="header">
@@ -47,8 +47,12 @@
     </div>
 </div>
 
+@stop
+@section('javascripts')
+
 <script type="text/javascript">
     
+    $(document).ready(function() {
         var pollRegistry = new POLL.REGISTRY.PollRegistry(), 
             answerRegistry = new POLL.REGISTRY.AnswerRegistry(),
             pollMarshaller = new POLL.MARSHALLER.PollMarshaller(),
@@ -81,7 +85,7 @@
         
         loadPoll = function (pollId) {
             
-            pollRegistry.read(pollId, refreshPoll, pollLoadError);
+            pollRegistry.read(pollId, refreshPollWithData, pollLoadError);
             //refreshPollWithData();  //Debug
         };
         
@@ -240,6 +244,9 @@
             hideAnswerSubmit();
         };
         
-        loadPoll();
+        loadPoll(pollId);
+    }); //save
+
+
 </script>
 @stop
